@@ -81,12 +81,12 @@ export default function Home() {
           </div>
           {/* Right Side---------------------------------------------------- */}
           <div className="col-span-full mt-32 flex h-fit w-full justify-center px-8 sm:px-16 md:px-0 lg:col-span-1 lg:mx-0 lg:mt-20">
-            {/* Phone Image--------------------------------------------------- */}
+            {/* Phone Image------------------------------------------------- */}
             <div className="relative md:max-w-xl">
               {/* Graphics 1 */}
               <Image
                 src="/your-image.png"
-                className="absolute -top-20 left-56 hidden w-40 select-none sm:block lg:hidden lg:w-52 xl:block"
+                className="pointer-events-none absolute -top-20 left-56 hidden w-40 select-none sm:block lg:hidden lg:w-52 xl:block"
                 width={160}
                 height={160}
                 alt="Your Image"
@@ -94,7 +94,7 @@ export default function Home() {
               {/* Graphics 2 */}
               <Image
                 src="/line.png"
-                className="absolute -bottom-6 -left-6 w-20 select-none"
+                className="pointer-events-none absolute -bottom-6 -left-6 w-20 select-none"
                 width={80}
                 height={80}
                 alt="Line"
