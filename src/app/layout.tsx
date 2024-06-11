@@ -20,8 +20,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <NavBar />
-        {children}
-        <Footer />
+
+        {/* Main Min Height = Screen - NavBar */}
+        <main className="grainy-light flex min-h-[calc(100vh-3.5rem-1px)] flex-col">
+          {/* To push the footer to bottom: Content Height = 100% & Flex = 1  */}
+          <div className="flex h-full flex-1 flex-col">{children}</div>
+          <Footer />
+        </main>
       </body>
     </html>
   );
