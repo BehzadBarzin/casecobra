@@ -3,12 +3,7 @@
 import { useState, useTransition } from "react";
 import { cn } from "@/lib/utils";
 import Dropzone, { FileRejection } from "react-dropzone";
-import {
-  DoubleArrowUpIcon,
-  ImageIcon,
-  SymbolIcon,
-  UploadIcon,
-} from "@radix-ui/react-icons";
+import { ImageIcon, SymbolIcon, UploadIcon } from "@radix-ui/react-icons";
 import { Progress } from "@/components/ui/progress";
 
 const UploadPage = () => {
@@ -37,7 +32,7 @@ const UploadPage = () => {
   const [isPending, startTransition] = useTransition();
   // ---------------------------------------------------------------------------
   // Upload logic
-  const isUploading = true;
+  const isUploading = false;
   // ---------------------------------------------------------------------------
   return (
     <div
