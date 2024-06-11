@@ -465,7 +465,6 @@ const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
                 className="w-full"
                 disabled={isPending}
                 onClick={() => {
-                  console.log("Click");
                   // Use React Query mutation to save the configs
                   saveConfig({
                     configId,
