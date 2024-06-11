@@ -6,6 +6,22 @@ import NextImage from "next/image";
 import React, { FC } from "react";
 import { Rnd } from "react-rnd";
 import HandleComponent from "./HandleComponent";
+import { ScrollArea } from "./ui/scroll-area";
+import { RadioGroup } from "@headlessui/react";
+import { useState } from "react";
+import {
+  COLORS,
+  FINISHES,
+  MATERIALS,
+  MODELS,
+} from "@/validators/option-validator";
+
+type TOptions = {
+  color: (typeof COLORS)[number];
+  model: (typeof MODELS.options)[number];
+  material: (typeof MATERIALS.options)[number];
+  finish: (typeof FINISHES.options)[number];
+};
 
 interface IProps {
   configId: string;
@@ -15,6 +31,13 @@ interface IProps {
 
 const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
   // ---------------------------------------------------------------------------
+  // Options State
+  const [options, setOptions] = useState<TOptions>({
+    color: COLORS[0],
+    model: MODELS.options[0],
+    material: MATERIALS.options[0],
+    finish: FINISHES.options[0],
+  });
   // ---------------------------------------------------------------------------
   return (
     <div className="relative mb-20 mt-20 grid grid-cols-1 pb-20 lg:grid-cols-3">
@@ -42,7 +65,7 @@ const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
           <div
             className={cn(
               "absolute inset-0 bottom-px left-[3px] right-[3px] top-px rounded-[32px]",
-              `bg-red-500`, // This value will depend on user's choice
+              `bg-${options.color.tw}`, // This value will depend on user's choice
             )}
           />
           {/* -------------------------------------------------------------- */}
@@ -87,7 +110,38 @@ const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
       </div>
       {/* ------------------------------------------------------------------ */}
       {/* Configure the Case------------------------------------------------ */}
-      <div></div>
+      <div className="col-span-full flex h-[37.5rem] w-full flex-col bg-white lg:col-span-1">
+        <ScrollArea className="relative flex-1 overflow-auto">
+          {/* Bottom Gradient----------------------------------------------- */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-12 bg-gradient-to-t from-white"
+          />
+          {/* Config Options------------------------------------------------ */}
+          <div className="px-8 pb-12 pt-8">
+            {/* Title------------------------------------------------------- */}
+            <h2 className="text-3xl font-bold tracking-tight">
+              Customize your case
+            </h2>
+            {/* Separator--------------------------------------------------- */}
+            <div className="my-6 h-px w-full bg-zinc-200" />
+            {/* ------------------------------------------------------------ */}
+            <div className="relative mt-4 flex h-full flex-col justify-between">
+              <div className="flex flex-col gap-6">
+                {/* Color--------------------------------------------------- */}
+
+                {/* Model--------------------------------------------------- */}
+                {/* Material------------------------------------------------ */}
+                {/* -------------------------------------------------------- */}
+              </div>
+            </div>
+            {/* ------------------------------------------------------------ */}
+          </div>
+        </ScrollArea>
+        {/* Price + Submit-------------------------------------------------- */}
+        <div className="h-16 w-full bg-white px-8"></div>
+        {/* ---------------------------------------------------------------- */}
+      </div>
       {/* ------------------------------------------------------------------ */}
     </div>
   );
