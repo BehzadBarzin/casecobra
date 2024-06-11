@@ -23,7 +23,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { CheckIcon, ChevronDownIcon } from "@radix-ui/react-icons";
+import {
+  ArrowRightIcon,
+  CheckIcon,
+  ChevronDownIcon,
+} from "@radix-ui/react-icons";
+import { BASE_PRICE } from "@/config/products";
 
 type TOptions = {
   color: (typeof COLORS)[number];
@@ -295,7 +300,28 @@ const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
           </div>
         </ScrollArea>
         {/* Price + Submit-------------------------------------------------- */}
-        <div className="h-16 w-full bg-white px-8"></div>
+        <div className="h-16 w-full bg-white px-8">
+          {/* Divider------------------------------------------------------- */}
+          <div className="h-px w-full bg-zinc-200" />
+          {/* -------------------------------------------------------------- */}
+          <div className="flex h-full w-full items-center justify-end">
+            <div className="flex w-full items-center gap-6">
+              {/* Price----------------------------------------------------- */}
+              <p className="whitespace-nowrap font-medium">
+                {formatPrice(
+                  (BASE_PRICE + options.finish.price + options.material.price) /
+                    100,
+                )}
+              </p>
+              {/* Button---------------------------------------------------- */}
+              <Button size="sm" className="w-full">
+                Continue
+                <ArrowRightIcon className="ml-1.5 inline h-4 w-4" />
+              </Button>
+              {/* ---------------------------------------------------------- */}
+            </div>
+          </div>
+        </div>
         {/* ---------------------------------------------------------------- */}
       </div>
       {/* ------------------------------------------------------------------ */}
