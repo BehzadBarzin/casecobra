@@ -45,6 +45,7 @@ interface IProps {
 
 const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
   // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Options State
   const [options, setOptions] = useState<TOptions>({
     color: COLORS[0],
@@ -52,6 +53,19 @@ const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
     material: MATERIALS.options[0],
     finish: FINISHES.options[0],
   });
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // Image Dimension State
+  const [renderedDimension, setRenderedDimension] = useState({
+    width: imageDimensions.width / 4,
+    height: imageDimensions.height / 4,
+  });
+  // Image Position State
+  const [renderedPosition, setRenderedPosition] = useState({
+    x: 150,
+    y: 205,
+  });
+  // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   return (
     <div className="relative mb-20 mt-20 grid grid-cols-1 pb-20 lg:grid-cols-3">
@@ -88,18 +102,24 @@ const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
         {/* RND to enable the user to drag the image around */}
         <Rnd
           default={{
-            x: 150,
-            y: 205,
-            height: imageDimensions.height / 4,
-            width: imageDimensions.width / 4,
+            x: renderedPosition.x,
+            y: renderedPosition.y,
+            height: renderedDimension.height,
+            width: renderedDimension.width,
           }}
           onResizeStop={(_, __, ref, ___, { x, y }) => {
-            // Update image
+            // Update image dimensions
+            setRenderedDimension({
+              height: parseInt(ref.style.height.slice(0, -2)), // 'ref.style.height' for example: "100px" so we slice it to get "100"
+              width: parseInt(ref.style.width.slice(0, -2)), // 'ref.style.width' for example: "100px" so we slice it to get "100"
+            });
+            // Update image position
+            setRenderedPosition({ x, y });
           }}
           onDragStop={(_, data) => {
+            // Update image position
             const { x, y } = data;
-
-            // Update image
+            setRenderedPosition({ x, y });
           }}
           className="absolute z-20 border-[3px] border-dashed border-primary"
           lockAspectRatio
