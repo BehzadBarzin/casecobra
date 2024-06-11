@@ -209,7 +209,7 @@ export default function Home() {
               <div className="mt-2 flex gap-4">
                 <Image
                   className="h-12 w-12 rounded-full object-cover"
-                  src="/users/user-4.png"
+                  src="/users/user-4.jpg"
                   width="40"
                   height="40"
                   alt="Avatar"
