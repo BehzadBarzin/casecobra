@@ -1,7 +1,7 @@
 import { Icons } from "@/components/Icons";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import Phone from "@/components/Phone";
-import Reviews from "@/components/Reviews";
+import Showcases from "@/components/Showcases";
 import { homeFeatures, homeUserAvatars } from "@/constants";
 import { CheckIcon, StarFilledIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
@@ -11,7 +11,7 @@ export default function Home() {
     <div className="bg-slate-50">
       {/* Top Section------------------------------------------------------- */}
       <section>
-        <MaxWidthWrapper className="pb-[600px] pt-10 lg:grid lg:grid-cols-3 lg:gap-x-0 lg:pb-52 lg:pt-24 xl:gap-x-8 xl:pt-32">
+        <MaxWidthWrapper className="pb-6 pt-10 lg:grid lg:grid-cols-3 lg:gap-x-0 lg:pb-52 lg:pt-24 xl:gap-x-8 xl:pt-32">
           {/* Left Side----------------------------------------------------- */}
           <div className="col-span-2 px-6 lg:px-0 lg:pt-4">
             <div className="relative mx-auto flex flex-col items-center text-center lg:items-start lg:text-left">
@@ -96,14 +96,13 @@ export default function Home() {
               {/* Graphics 2 */}
               <Image
                 src="/line.png"
-                className="pointer-events-none absolute -bottom-[550px] -left-6 w-20 select-none"
+                className="pointer-events-none absolute -bottom-6 -left-6 w-20 select-none"
                 width={80}
                 height={80}
                 alt="Line"
               />
               {/* Sample Cover */}
               <Phone
-                containerProps={{ className: "w-64" }}
                 imageProps={{
                   src: "/testimonials/1.jpg",
                   alt: "Testimonial",
@@ -140,9 +139,9 @@ export default function Home() {
             />
           </div>
         </MaxWidthWrapper>
-        {/* Reviews--------------------------------------------------------- */}
+        {/* Showcases------------------------------------------------------- */}
         <div className="pt-16">
-          <Reviews />
+          <Showcases />
         </div>
         {/* ---------------------------------------------------------------- */}
       </section>

@@ -21,7 +21,7 @@ const Phone: FC<IProps> = ({ dark = false, containerProps, imageProps }) => {
   return (
     <div
       className={cn(
-        "pointer-events-none relative z-50",
+        "pointer-events-none relative z-50 overflow-hidden",
         containerProps?.className,
       )}
       {...containerProps}
@@ -33,23 +33,22 @@ const Phone: FC<IProps> = ({ dark = false, containerProps, imageProps }) => {
             ? "/phone-template-dark-edges.png"
             : "/phone-template-white-edges.png"
         }
-        className={"pointer-events-none absolute z-50 select-none"}
+        className={"pointer-events-none z-50 select-none"}
         alt="Phone Template"
         width={width}
         height={height}
       />
       {/* Cover Image (shown behind Phone Template) */}
-      <Image
-        className={cn(
-          "pointer-events-none absolute inset-0 z-40 select-none",
-          imageClassName,
-        )}
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        {...otherImageProps}
-      />
+      <div className="absolute inset-0 -z-10">
+        <Image
+          className={cn("min-h-full object-cover", imageClassName)}
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          {...otherImageProps}
+        />
+      </div>
     </div>
   );
 };
