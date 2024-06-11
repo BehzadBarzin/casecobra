@@ -118,7 +118,9 @@ export default function Home() {
       {/* /Top Section------------------------------------------------------ */}
       {/* Value Proposition------------------------------------------------- */}
       <section className="grainy-dark bg-slate-100 py-24">
+        {/* Heading + Reviews----------------------------------------------- */}
         <MaxWidthWrapper className="flex flex-col items-center gap-16 sm:gap-32">
+          {/* Heading------------------------------------------------------- */}
           <div className="flex flex-col items-center gap-4 sm:gap-6 lg:flex-row">
             {/* What our customers say */}
             <h2 className="order-1 mt-2 text-balance text-center text-5xl font-bold !leading-tight tracking-tight text-gray-900 md:text-6xl">
@@ -138,6 +140,86 @@ export default function Home() {
               height={96}
             />
           </div>
+          {/* User Reviews-------------------------------------------------- */}
+          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-y-16 px-4 lg:mx-0 lg:max-w-none lg:grid-cols-2">
+            {/* User Review 1----------------------------------------------- */}
+            <div className="flex flex-auto flex-col gap-4 lg:pr-8 xl:pr-20">
+              <div className="mb-2 flex gap-0.5">
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
+              </div>
+              <div className="text-lg leading-8">
+                <p>
+                  {'"'}The case feels durable and I even got a compliment on the
+                  design. Had the case for two and a half months now and{" "}
+                  <span className="bg-slate-800 p-0.5 text-white">
+                    the image is super clear
+                  </span>
+                  , on the case I had before, the image started fading into
+                  yellow-ish color after a couple weeks. Love it.{'"'}
+                </p>
+              </div>
+              <div className="mt-2 flex gap-4">
+                <Image
+                  className="h-12 w-12 rounded-full object-cover"
+                  src="/users/user-1.png"
+                  width="40"
+                  height="40"
+                  alt="Avatar"
+                />
+                <div className="flex flex-col">
+                  <p className="font-semibold">Jonathan</p>
+                  <div className="flex items-center gap-1.5 text-zinc-600">
+                    <CheckIcon className="h-4 w-4 stroke-[3px] text-green-600" />
+                    <p className="text-sm">Verified Purchase</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* User Review 2----------------------------------------------- */}
+            <div className="flex flex-auto flex-col gap-4 lg:pr-8 xl:pr-20">
+              <div className="mb-2 flex gap-0.5">
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
+              </div>
+              <div className="text-lg leading-8">
+                <p>
+                  {'"'}I usually keep my phone together with my keys in my
+                  pocket and that led to some pretty heavy scratchmarks on all
+                  of my last phone cases. This one, besides a barely noticeable
+                  scratch on the corner,{" "}
+                  <span className="bg-slate-800 p-0.5 text-white">
+                    looks brand new after about half a year
+                  </span>
+                  . I dig it.{'"'}
+                </p>
+              </div>
+              <div className="mt-2 flex gap-4">
+                <Image
+                  className="h-12 w-12 rounded-full object-cover"
+                  src="/users/user-4.png"
+                  width="40"
+                  height="40"
+                  alt="Avatar"
+                />
+                <div className="flex flex-col">
+                  <p className="font-semibold">Josh</p>
+                  <div className="flex items-center gap-1.5 text-zinc-600">
+                    <CheckIcon className="h-4 w-4 stroke-[3px] text-green-600" />
+                    <p className="text-sm">Verified Purchase</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* ------------------------------------------------------------ */}
+          </div>
+          {/* -------------------------------------------------------------- */}
         </MaxWidthWrapper>
         {/* Showcases------------------------------------------------------- */}
         <div className="pt-16">
