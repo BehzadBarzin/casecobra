@@ -5,6 +5,8 @@ import { cn } from "@/lib/utils";
 import Dropzone, { FileRejection } from "react-dropzone";
 import { ImageIcon, SymbolIcon, UploadIcon } from "@radix-ui/react-icons";
 import { Progress } from "@/components/ui/progress";
+import { useRouter } from "next/navigation";
+import { useUploadThing } from "@/lib/uploadthing";
 
 const UploadPage = () => {
   // ---------------------------------------------------------------------------
@@ -24,6 +26,7 @@ const UploadPage = () => {
   // If file is accepted
   const onDropAccepted = (acceptedFiles: File[]) => {
     // Start upload
+    startUpload(acceptedFiles, { configId: undefined });
 
     setIsDragOver(false);
   };
@@ -31,8 +34,25 @@ const UploadPage = () => {
   // Allows components to avoid undesirable loading states by waiting for content to load before transitioning to the next screen.
   const [isPending, startTransition] = useTransition();
   // ---------------------------------------------------------------------------
+  const router = useRouter();
+  // ---------------------------------------------------------------------------
   // Upload logic
-  const isUploading = false;
+  const { startUpload, isUploading } = useUploadThing("imageUploader", {
+    // On complete
+    onClientUploadComplete: ([data]) => {
+      // Get the configId from uploaded file
+      const configId = data.serverData.configId;
+      // Transition to next screen
+      startTransition(() => {
+        // Go to next screen
+        router.push(`/configure/design?id=${configId}`);
+      });
+    },
+    // On progress
+    onUploadProgress(p) {
+      setUploadProgress(p);
+    },
+  });
   // ---------------------------------------------------------------------------
   return (
     <div
