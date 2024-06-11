@@ -1,9 +1,9 @@
 "use client";
 
-import { cn, formatPrice } from "@/lib/utils";
+import { base64ToBlob, cn, formatPrice } from "@/lib/utils";
 import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import NextImage from "next/image";
-import React, { FC } from "react";
+import React, { FC, useRef } from "react";
 import { Rnd } from "react-rnd";
 import HandleComponent from "./HandleComponent";
 import { ScrollArea } from "./ui/scroll-area";
@@ -29,6 +29,9 @@ import {
   ChevronDownIcon,
 } from "@radix-ui/react-icons";
 import { BASE_PRICE } from "@/config/products";
+import { useToast } from "./ui/use-toast";
+import { useRouter } from "next/navigation";
+import { useUploadThing } from "@/lib/uploadthing";
 
 type TOptions = {
   color: (typeof COLORS)[number];
@@ -44,6 +47,12 @@ interface IProps {
 }
 
 const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
+  // ---------------------------------------------------------------------------
+  // To show toast message
+  const { toast } = useToast();
+  // ---------------------------------------------------------------------------
+  // To navigate
+  const router = useRouter();
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   // Options State
@@ -67,13 +76,87 @@ const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
   });
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
+  // Refs to keep track of the phone template and the canvas to crop the final image
+  const phoneTemplateRef = useRef<HTMLDivElement>(null); // Phone Template
+  const containerRef = useRef<HTMLDivElement>(null); // Container where user can configure the image inside
+  // ---------------------------------------------------------------------------
+  // Get upload function
+  const { startUpload } = useUploadThing("imageUploader");
+  // ---------------------------------------------------------------------------
+  // Save Configs
+  async function saveConfiguration() {
+    try {
+      // -----------------------------------------------------------------------
+      // Get the current position and size of the phone template
+      const {
+        left: caseLeft,
+        top: caseTop,
+        width,
+        height,
+      } = phoneTemplateRef.current!.getBoundingClientRect();
+      // -----------------------------------------------------------------------
+      // Get the current position of the container
+      const { left: containerLeft, top: containerTop } =
+        containerRef.current!.getBoundingClientRect();
+      // -----------------------------------------------------------------------
+      // Crop Image
+      // Create a canvas, draw the user image and crop the final image
+      const leftOffset = caseLeft - containerLeft;
+      const topOffset = caseTop - containerTop;
+
+      const actualX = renderedPosition.x - leftOffset;
+      const actualY = renderedPosition.y - topOffset;
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+
+      const userImage = new Image();
+      userImage.crossOrigin = "anonymous";
+      userImage.src = imageUrl;
+      await new Promise((resolve) => (userImage.onload = resolve));
+
+      ctx?.drawImage(
+        userImage,
+        actualX,
+        actualY,
+        renderedDimension.width,
+        renderedDimension.height,
+      );
+
+      const base64 = canvas.toDataURL();
+      const base64Data = base64.split(",")[1];
+
+      const blob = base64ToBlob(base64Data, "image/png");
+      const file = new File([blob], "filename.png", { type: "image/png" });
+
+      // Start Cropped Image Upload
+      // Sending config id so that the server knows that the image belongs to a certain config
+      await startUpload([file], { configId });
+      // -----------------------------------------------------------------------
+    } catch (err) {
+      toast({
+        title: "Something went wrong",
+        description:
+          "There was a problem saving your config, please try again.",
+        variant: "destructive",
+      });
+    }
+  }
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   return (
     <div className="relative mb-20 mt-20 grid grid-cols-1 pb-20 lg:grid-cols-3">
       {/* Configure Image--------------------------------------------------- */}
-      <div className="relative col-span-2 flex h-[37.5rem] w-full max-w-4xl items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-gray-300 p-12 text-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+      <div
+        ref={containerRef}
+        className="relative col-span-2 flex h-[37.5rem] w-full max-w-4xl items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-gray-300 p-12 text-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+      >
         {/* Phone Template */}
         <div className="pointer-events-none relative aspect-[896/1831] w-60 bg-opacity-50">
           <AspectRatio
+            ref={phoneTemplateRef}
             ratio={896 / 1831}
             className="pointer-events-none relative z-50 aspect-[896/1831] w-full"
           >
