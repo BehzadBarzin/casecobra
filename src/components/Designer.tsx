@@ -32,6 +32,11 @@ import { BASE_PRICE } from "@/config/products";
 import { useToast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useUploadThing } from "@/lib/uploadthing";
+import { useMutation } from "@tanstack/react-query";
+import {
+  saveConfig as _saveConfig,
+  TSaveConfigArgs,
+} from "@/app/configure/design/actions";
 
 type TOptions = {
   color: (typeof COLORS)[number];
@@ -83,8 +88,8 @@ const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
   // Get upload function
   const { startUpload } = useUploadThing("imageUploader");
   // ---------------------------------------------------------------------------
-  // Save Configs
-  async function saveConfiguration() {
+  // Save Image Configs
+  async function saveImageConfiguration() {
     try {
       // -----------------------------------------------------------------------
       // Get the current position and size of the phone template
@@ -144,6 +149,26 @@ const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
       });
     }
   }
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // React Query to save configs
+  const { mutate: saveConfig, isPending } = useMutation({
+    mutationKey: ["save-config"],
+    mutationFn: async (args: TSaveConfigArgs) => {
+      // Simultaneously save the image and the config (using server action)
+      await Promise.all([saveImageConfiguration(), _saveConfig(args)]);
+    },
+    onError: () => {
+      toast({
+        title: "Something went wrong",
+        description: "There was an error on our end. Please try again.",
+        variant: "destructive",
+      });
+    },
+    onSuccess: () => {
+      router.push(`/configure/preview?id=${configId}`);
+    },
+  });
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   return (
@@ -290,6 +315,18 @@ const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
                         variant="outline"
                         role="combobox"
                         className="w-full justify-between"
+                        disabled={isPending}
+                        onClick={() => {
+                          console.log("Click");
+                          // Use React Query mutation to save the configs
+                          saveConfig({
+                            configId,
+                            color: options.color.value,
+                            finish: options.finish.value,
+                            material: options.material.value,
+                            model: options.model.value,
+                          });
+                        }}
                       >
                         {options.model.label}
                         <ChevronDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
