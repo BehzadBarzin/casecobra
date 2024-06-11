@@ -16,6 +16,14 @@ import {
   MODELS,
 } from "@/validators/option-validator";
 import { Label } from "./ui/label";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { CheckIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 
 type TOptions = {
   color: (typeof COLORS)[number];
@@ -166,6 +174,48 @@ const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
                   </div>
                 </RadioGroup>
                 {/* Model--------------------------------------------------- */}
+                <div className="relative flex w-full flex-col gap-3">
+                  <Label>Model</Label>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        className="w-full justify-between"
+                      >
+                        {options.model.label}
+                        <ChevronDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      {MODELS.options.map((model) => (
+                        <DropdownMenuItem
+                          key={model.label}
+                          className={cn(
+                            "flex cursor-default items-center gap-1 p-1.5 text-sm hover:bg-zinc-100",
+                            {
+                              "bg-zinc-100":
+                                model.label === options.model.label,
+                            },
+                          )}
+                          onClick={() => {
+                            setOptions((prev) => ({ ...prev, model }));
+                          }}
+                        >
+                          <CheckIcon
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              model.label === options.model.label
+                                ? "opacity-100"
+                                : "opacity-0",
+                            )}
+                          />
+                          {model.label}
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
                 {/* Material------------------------------------------------ */}
                 {/* -------------------------------------------------------- */}
               </div>

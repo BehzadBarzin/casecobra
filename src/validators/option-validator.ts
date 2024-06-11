@@ -1,3 +1,6 @@
+// Below comments are a solution to enable dynamic class names using Tailwind.
+// By default, we couldn't use `bg-${color}`, where → const color = 'blue-950';
+// But if we use these values in comments, we can use dynamic class names:
 // bg-blue-950 border-blue-950
 // bg-zinc-900 border-zinc-900
 // bg-rose-950 border-rose-950
