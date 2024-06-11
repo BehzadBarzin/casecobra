@@ -6,8 +6,9 @@ import Dropzone, { FileRejection } from "react-dropzone";
 import { ImageIcon, SymbolIcon, UploadIcon } from "@radix-ui/react-icons";
 import { Progress } from "@/components/ui/progress";
 import { useRouter } from "next/navigation";
-import { useUploadThing } from "@/lib/uploadthing";
 import { useToast } from "@/components/ui/use-toast";
+import { useEdgeStore } from "@/lib/edgestore";
+import { uploadDone } from "@/app/api/edgestore/[...edgestore]/actions";
 
 const UploadPage = () => {
   // ---------------------------------------------------------------------------
@@ -36,7 +37,7 @@ const UploadPage = () => {
   // If file is accepted
   const onDropAccepted = (acceptedFiles: File[]) => {
     // Start upload
-    startUpload(acceptedFiles, { configId: undefined });
+    startUpload(acceptedFiles[0]);
 
     setIsDragOver(false);
   };
@@ -47,22 +48,35 @@ const UploadPage = () => {
   const router = useRouter();
   // ---------------------------------------------------------------------------
   // Upload logic
-  const { startUpload, isUploading } = useUploadThing("imageUploader", {
-    // On complete
-    onClientUploadComplete: ([data]) => {
-      // Get the configId from uploaded file
-      const configId = data.serverData.configId;
+  const { edgestore, state } = useEdgeStore();
+
+  async function startUpload(file: File) {
+    // Upload to edgeStore
+    try {
+      const res = await edgestore.publicFiles.upload({
+        file,
+        onProgressChange: (progress) => {
+          // you can use this to show a progress bar
+          setUploadProgress(progress);
+        },
+      });
+
+      // Call server action to handle uploaded file
+      // Passing undefined as configId, because it's a new config
+      const configId = await uploadDone(res.url, undefined);
+
       // Transition to next screen
       startTransition(() => {
         // Go to next screen
         router.push(`/configure/design?id=${configId}`);
       });
-    },
-    // On progress
-    onUploadProgress(p) {
-      setUploadProgress(p);
-    },
-  });
+    } catch (error) {
+      toast({
+        title: "Something went wrong while uploading.",
+        variant: "destructive",
+      });
+    }
+  }
   // ---------------------------------------------------------------------------
   return (
     <div
@@ -99,7 +113,7 @@ const UploadPage = () => {
                 {isDragOver ? (
                   // User drags file over
                   <UploadIcon className="mb-2 h-6 w-6 text-zinc-500" />
-                ) : isUploading || isPending ? (
+                ) : state.loading || isPending ? (
                   // File is being uploaded
                   <SymbolIcon className="mb-2 h-6 w-6 animate-spin text-zinc-500" />
                 ) : (
@@ -108,7 +122,7 @@ const UploadPage = () => {
                 )}
                 {/* Title--------------------------------------------------- */}
                 <div className="mb-2 flex flex-col justify-center text-sm text-zinc-700">
-                  {isUploading ? (
+                  {state.loading ? (
                     // File is being uploaded
                     <div className="flex flex-col items-center">
                       <p>Uploading...</p>

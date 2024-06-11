@@ -31,12 +31,13 @@ import {
 import { BASE_PRICE } from "@/config/products";
 import { useToast } from "./ui/use-toast";
 import { useRouter } from "next/navigation";
-import { useUploadThing } from "@/lib/uploadthing";
 import { useMutation } from "@tanstack/react-query";
 import {
   saveConfig as _saveConfig,
   TSaveConfigArgs,
 } from "@/app/configure/design/actions";
+import { useEdgeStore } from "@/lib/edgestore";
+import { uploadDone } from "@/app/api/edgestore/[...edgestore]/actions";
 
 type TOptions = {
   color: (typeof COLORS)[number];
@@ -85,8 +86,25 @@ const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
   const phoneTemplateRef = useRef<HTMLDivElement>(null); // Phone Template
   const containerRef = useRef<HTMLDivElement>(null); // Container where user can configure the image inside
   // ---------------------------------------------------------------------------
-  // Get upload function
-  const { startUpload } = useUploadThing("imageUploader");
+  // Upload Logic
+  const { edgestore, state } = useEdgeStore();
+
+  async function startUpload(file: File, configId: string) {
+    // Upload to edgeStore
+    try {
+      const res = await edgestore.publicFiles.upload({
+        file,
+      });
+
+      // Call server action to handle uploaded file
+      await uploadDone(res.url, configId);
+    } catch (error) {
+      toast({
+        title: "Something went wrong while uploading.",
+        variant: "destructive",
+      });
+    }
+  }
   // ---------------------------------------------------------------------------
   // Save Image Configs
   async function saveImageConfiguration() {
@@ -138,7 +156,7 @@ const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
 
       // Start Cropped Image Upload
       // Sending config id so that the server knows that the image belongs to a certain config
-      await startUpload([file], { configId });
+      await startUpload(file, configId);
       // -----------------------------------------------------------------------
     } catch (err) {
       toast({
@@ -315,18 +333,6 @@ const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
                         variant="outline"
                         role="combobox"
                         className="w-full justify-between"
-                        disabled={isPending}
-                        onClick={() => {
-                          console.log("Click");
-                          // Use React Query mutation to save the configs
-                          saveConfig({
-                            configId,
-                            color: options.color.value,
-                            finish: options.finish.value,
-                            material: options.material.value,
-                            model: options.model.value,
-                          });
-                        }}
                       >
                         {options.model.label}
                         <ChevronDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -454,7 +460,22 @@ const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
                 )}
               </p>
               {/* Button---------------------------------------------------- */}
-              <Button size="sm" className="w-full">
+              <Button
+                size="sm"
+                className="w-full"
+                disabled={isPending}
+                onClick={() => {
+                  console.log("Click");
+                  // Use React Query mutation to save the configs
+                  saveConfig({
+                    configId,
+                    color: options.color.value,
+                    finish: options.finish.value,
+                    material: options.material.value,
+                    model: options.model.value,
+                  });
+                }}
+              >
                 Continue
                 <ArrowRightIcon className="ml-1.5 inline h-4 w-4" />
               </Button>

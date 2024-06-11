@@ -3,7 +3,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "utfs.io",
+        hostname: "files.edgestore.dev",
         protocol: "https",
       },
     ],

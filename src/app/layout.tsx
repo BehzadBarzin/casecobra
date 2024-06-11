@@ -5,6 +5,7 @@ import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import QueryProvider from "@/providers/QueryProvider";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,8 +28,11 @@ export default function RootLayout({
         <main className="grainy-light flex min-h-[calc(100vh-3.5rem-1px)] flex-col">
           {/* To push the footer to bottom: Content Height = 100% & Flex = 1  */}
           <div className="flex h-full flex-1 flex-col">
-            {/* React Query Provider */}
-            <QueryProvider>{children}</QueryProvider>
+            {/* EdgeStore provider */}
+            <EdgeStoreProvider>
+              {/* React Query Provider */}
+              <QueryProvider>{children}</QueryProvider>
+            </EdgeStoreProvider>
           </div>
           <Footer />
         </main>

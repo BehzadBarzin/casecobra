@@ -10,6 +10,8 @@
     "db:push": "dotenv -e .env.local -- pnpx prisma db push"
   },
   "dependencies": {
+    "@edgestore/react": "^0.1.6",
+    "@edgestore/server": "^0.1.6",
     "@headlessui/react": "^2.0.4",
     "@kinde-oss/kinde-auth-nextjs": "^2.2.13",
     "@prisma/client": "^5.15.0",
@@ -22,7 +24,6 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
     "@tanstack/react-query": "^5.44.0",
-    "@uploadthing/react": "^6.6.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "dotenv-cli": "^7.4.2",
@@ -36,7 +37,6 @@
     "sharp": "^0.33.4",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "uploadthing": "^6.12.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
