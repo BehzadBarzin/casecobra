@@ -11,3 +11,10 @@ export const homeFeatures = [
   "year print guarantee",
   "Modern iPhone models supported",
 ];
+
+export const homeFeatures2 = [
+  "High-quality silicone material",
+  "Scratch- and fingerprint resistant coating",
+  "Wireless charging compatible",
+  "year print warranty",
+];
