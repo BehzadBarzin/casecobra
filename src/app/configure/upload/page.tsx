@@ -7,8 +7,12 @@ import { ImageIcon, SymbolIcon, UploadIcon } from "@radix-ui/react-icons";
 import { Progress } from "@/components/ui/progress";
 import { useRouter } from "next/navigation";
 import { useUploadThing } from "@/lib/uploadthing";
+import { useToast } from "@/components/ui/use-toast";
 
 const UploadPage = () => {
+  // ---------------------------------------------------------------------------
+  // To display toast messages
+  const { toast } = useToast();
   // ---------------------------------------------------------------------------
   // Is user dragging a file over?
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
@@ -21,6 +25,12 @@ const UploadPage = () => {
     const [file] = rejectedFiles;
 
     setIsDragOver(false);
+
+    toast({
+      title: `${file.file.type} type is not supported.`,
+      description: "Please choose a PNG, JPG, or JPEG image instead.",
+      variant: "destructive",
+    });
   };
   // ---------------------------------------------------------------------------
   // If file is accepted
