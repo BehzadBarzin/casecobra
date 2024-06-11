@@ -1,5 +1,7 @@
+import { Icons } from "@/components/Icons";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import Phone from "@/components/Phone";
+import Reviews from "@/components/Reviews";
 import { homeFeatures, homeUserAvatars } from "@/constants";
 import { CheckIcon, StarFilledIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
@@ -7,8 +9,8 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div className="bg-slate-50">
+      {/* Top Section------------------------------------------------------- */}
       <section>
-        {/* Top Section----------------------------------------------------- */}
         <MaxWidthWrapper className="pb-24 pt-10 sm:pb-32 lg:grid lg:grid-cols-3 lg:gap-x-0 lg:pb-52 lg:pt-24 xl:gap-x-8 xl:pt-32">
           {/* Left Side----------------------------------------------------- */}
           <div className="col-span-2 px-6 lg:px-0 lg:pt-4">
@@ -113,8 +115,38 @@ export default function Home() {
           </div>
           {/* -------------------------------------------------------------- */}
         </MaxWidthWrapper>
-        {/* /Top Section----------------------------------------------------- */}
       </section>
+      {/* /Top Section------------------------------------------------------ */}
+      {/* Value Proposition------------------------------------------------- */}
+      <section className="grainy-dark bg-slate-100 py-24">
+        <MaxWidthWrapper className="flex flex-col items-center gap-16 sm:gap-32">
+          <div className="flex flex-col items-center gap-4 sm:gap-6 lg:flex-row">
+            {/* What our customers say */}
+            <h2 className="order-1 mt-2 text-balance text-center text-5xl font-bold !leading-tight tracking-tight text-gray-900 md:text-6xl">
+              What our{" "}
+              <span className="relative px-2">
+                customers{" "}
+                <Icons.Underline className="pointer-events-none absolute inset-x-0 -bottom-6 hidden text-green-500 sm:block" />
+              </span>{" "}
+              say
+            </h2>
+            {/* Snake image */}
+            <Image
+              src="/snake-2.png"
+              alt="Snake-2"
+              className="order-0 lg:order-2"
+              width={96}
+              height={96}
+            />
+          </div>
+        </MaxWidthWrapper>
+        {/* Reviews--------------------------------------------------------- */}
+        <div className="pt-16">
+          <Reviews />
+        </div>
+        {/* ---------------------------------------------------------------- */}
+      </section>
+      {/* /Value Proposition------------------------------------------------ */}
     </div>
   );
 }
