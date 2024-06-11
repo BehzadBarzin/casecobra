@@ -15,6 +15,7 @@ import {
   MATERIALS,
   MODELS,
 } from "@/validators/option-validator";
+import { Label } from "./ui/label";
 
 type TOptions = {
   color: (typeof COLORS)[number];
@@ -129,7 +130,41 @@ const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
             <div className="relative mt-4 flex h-full flex-col justify-between">
               <div className="flex flex-col gap-6">
                 {/* Color--------------------------------------------------- */}
-
+                <RadioGroup
+                  value={options.color}
+                  onChange={(val) => {
+                    setOptions((prev) => ({
+                      ...prev,
+                      color: val,
+                    }));
+                  }}
+                >
+                  <Label>Color: {options.color.label}</Label>
+                  <div className="mt-3 flex items-center space-x-3">
+                    {/* Map over colors */}
+                    {COLORS.map((color) => (
+                      <RadioGroup.Option
+                        key={color.label}
+                        value={color}
+                        className={({ active, checked }) =>
+                          cn(
+                            "relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full border-2 border-transparent p-0.5 focus:outline-none focus:ring-0 active:outline-none active:ring-0",
+                            {
+                              [`border-${color.tw}`]: active || checked,
+                            },
+                          )
+                        }
+                      >
+                        <span
+                          className={cn(
+                            `bg-${color.tw}`,
+                            "h-8 w-8 rounded-full border border-black border-opacity-10",
+                          )}
+                        />
+                      </RadioGroup.Option>
+                    ))}
+                  </div>
+                </RadioGroup>
                 {/* Model--------------------------------------------------- */}
                 {/* Material------------------------------------------------ */}
                 {/* -------------------------------------------------------- */}
