@@ -135,6 +135,10 @@ const Designer: FC<IProps> = ({ configId, imageUrl, imageDimensions }) => {
       canvas.height = height;
       const ctx = canvas.getContext("2d");
 
+      // Todo: TEMP: Canvas doesn't set the background to transparent so we match it with the color of the case
+      ctx!.fillStyle = options.color.rgb;
+      ctx?.fillRect(0, 0, canvas.width, canvas.height);
+
       const userImage = new Image();
       userImage.crossOrigin = "anonymous";
       userImage.src = imageUrl;
