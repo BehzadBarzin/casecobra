@@ -14,26 +14,26 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="bg-slate-50">
+    <div className="bg-slate-50 ">
       {/* Top Section------------------------------------------------------- */}
       <section>
         <MaxWidthWrapper className="pb-6 pt-10 lg:grid lg:grid-cols-3 lg:gap-x-0 lg:pb-52 lg:pt-24 xl:gap-x-8 xl:pt-32">
           {/* Left Side----------------------------------------------------- */}
           <div className="col-span-2 px-6 lg:px-0 lg:pt-4">
             <div className="relative mx-auto flex flex-col items-center text-center lg:items-start lg:text-left">
-              {/* Snake Image----------------------------------------------- */}
+              {/* Logo Image------------------------------------------------ */}
               <div className="absolute -top-20 left-0 hidden w-28 lg:block">
                 <Image
-                  src="/snake-1.png"
+                  src="/logo.png"
                   width="112"
                   height="112"
-                  alt="Snake"
+                  alt="logo"
                 />
               </div>
               {/* Title Text------------------------------------------------ */}
               <h1 className="relative mt-16 w-fit text-balance text-5xl font-bold !leading-tight tracking-tight text-gray-900 md:text-6xl lg:text-7xl">
                 Your image on a{" "}
-                <span className="bg-green-600 px-2 text-white">Custom</span>{" "}
+                <span className="bg-main px-2 text-white">Custom</span>{" "}
                 Phone Case
               </h1>
               {/* Subtitle Text--------------------------------------------- */}
@@ -51,7 +51,7 @@ export default function Home() {
                       key={`feature-${idx}`}
                       className="flex items-center gap-1.5 text-left"
                     >
-                      <CheckIcon className="h-5 w-5 shrink-0 text-green-600" />
+                      <CheckIcon className="h-5 w-5 shrink-0 text-main" />
                       {feature}
                     </li>
                   ))}
@@ -74,11 +74,11 @@ export default function Home() {
                 {/* 5 Stars------------------------------------------------- */}
                 <div className="flex flex-col items-center justify-between sm:items-start">
                   <div className="flex gap-0.5">
-                    <StarFilledIcon className="h-4 w-4 text-green-600" />
-                    <StarFilledIcon className="h-4 w-4 text-green-600" />
-                    <StarFilledIcon className="h-4 w-4 text-green-600" />
-                    <StarFilledIcon className="h-4 w-4 text-green-600" />
-                    <StarFilledIcon className="h-4 w-4 text-green-600" />
+                    <StarFilledIcon className="h-4 w-4 text-main" />
+                    <StarFilledIcon className="h-4 w-4 text-main" />
+                    <StarFilledIcon className="h-4 w-4 text-main" />
+                    <StarFilledIcon className="h-4 w-4 text-main" />
+                    <StarFilledIcon className="h-4 w-4 text-main" />
                   </div>
                   <p>
                     <span className="font-semibold">1.250</span> happy customers
@@ -110,7 +110,7 @@ export default function Home() {
               {/* Sample Cover */}
               <Phone
                 imageProps={{
-                  src: "/testimonials/1.jpg",
+                  src: "/showcases/1.jpg",
                   alt: "Testimonial",
                   width: 256,
                   height: 256,
@@ -133,14 +133,14 @@ export default function Home() {
               What our{" "}
               <span className="relative px-2">
                 customers{" "}
-                <Icons.Underline className="pointer-events-none absolute inset-x-0 -bottom-6 hidden text-green-500 sm:block" />
+                <Icons.Underline className="pointer-events-none absolute inset-x-0 -bottom-6 hidden text-main sm:block" />
               </span>{" "}
               say
             </h2>
-            {/* Snake image */}
+            {/* logo image */}
             <Image
-              src="/snake-2.png"
-              alt="Snake-2"
+              src="/logo.png"
+              alt="logo"
               className="order-0 lg:order-2"
               width={96}
               height={96}
@@ -151,11 +151,11 @@ export default function Home() {
             {/* User Review 1----------------------------------------------- */}
             <div className="flex flex-auto flex-col gap-4 lg:pr-8 xl:pr-20">
               <div className="mb-2 flex gap-0.5">
-                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
-                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
-                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
-                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
-                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-main" />
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-main" />
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-main" />
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-main" />
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-main" />
               </div>
               <div className="text-lg leading-8">
                 <p>
@@ -179,7 +179,7 @@ export default function Home() {
                 <div className="flex flex-col">
                   <p className="font-semibold">Jonathan</p>
                   <div className="flex items-center gap-1.5 text-zinc-600">
-                    <CheckIcon className="h-4 w-4 stroke-[3px] text-green-600" />
+                    <CheckIcon className="h-4 w-4 stroke-[3px] text-main" />
                     <p className="text-sm">Verified Purchase</p>
                   </div>
                 </div>
@@ -188,11 +188,11 @@ export default function Home() {
             {/* User Review 2----------------------------------------------- */}
             <div className="flex flex-auto flex-col gap-4 lg:pr-8 xl:pr-20">
               <div className="mb-2 flex gap-0.5">
-                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
-                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
-                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
-                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
-                <StarFilledIcon className="h-5 w-5 fill-green-600 text-green-600" />
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-main" />
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-main" />
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-main" />
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-main" />
+                <StarFilledIcon className="h-5 w-5 fill-green-600 text-main" />
               </div>
               <div className="text-lg leading-8">
                 <p>
@@ -217,7 +217,7 @@ export default function Home() {
                 <div className="flex flex-col">
                   <p className="font-semibold">Josh</p>
                   <div className="flex items-center gap-1.5 text-zinc-600">
-                    <CheckIcon className="h-4 w-4 stroke-[3px] text-green-600" />
+                    <CheckIcon className="h-4 w-4 stroke-[3px] text-main" />
                     <p className="text-sm">Verified Purchase</p>
                   </div>
                 </div>
@@ -242,7 +242,7 @@ export default function Home() {
             <div className="mx-auto max-w-2xl sm:text-center">
               <h2 className="order-1 mt-2 text-balance text-center text-5xl font-bold !leading-tight tracking-tight text-gray-900 md:text-6xl">
                 Upload your photo and get{" "}
-                <span className="relative bg-green-600 px-2 text-white">
+                <span className="relative bg-main px-2 text-white">
                   your own case
                 </span>{" "}
                 now
@@ -288,7 +288,7 @@ export default function Home() {
             {/* List of features-------------------------------------------- */}
             {homeFeatures2.map((feature, idx) => (
               <li key={`feature-2-${idx}`} className="w-fit">
-                <CheckIcon className="mr-1.5 inline h-5 w-5 text-green-600" />
+                <CheckIcon className="mr-1.5 inline h-5 w-5 text-main" />
                 {feature}
               </li>
             ))}

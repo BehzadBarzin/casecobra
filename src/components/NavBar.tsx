@@ -20,7 +20,7 @@ const NavBar = async () => {
         <div className="flex h-14 items-center justify-between border-b border-zinc-200">
           {/* Logo---------------------------------------------------------- */}
           <Link href="/" className="z-40 flex font-semibold">
-            case<span className="text-green-600">cobra</span>
+            Custom<span className="text-main">Gripz</span>
           </Link>
           {/*  */}
           <div className="flex items-center space-x-4">

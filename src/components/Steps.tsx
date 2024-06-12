@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { ArrowUpIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
@@ -39,7 +40,7 @@ const Steps = () => {
           pathname.endsWith(step.url),
         );
         // Image path
-        const imgPath = `/snake-${i + 1}.png`;
+        const imgPath = `/step-${i + 1}.png`;
         // ---------------------------------------------------------------------
         return (
           <li key={step.name} className="relative overflow-hidden lg:flex-1">

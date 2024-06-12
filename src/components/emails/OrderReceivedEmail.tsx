@@ -35,10 +35,10 @@ const OrderReceivedEmail = ({
         <Container style={container}>
           <Section style={message}>
             <Img
-              src={`${baseUrl}/snake-3.png`}
+              src={`${baseUrl}/logo.png`}
               width="65"
               height="73"
-              alt="delivery snake"
+              alt="delivery logo"
               style={{ margin: "auto" }}
             />
             <Heading style={global.heading}>Thank you for your order!</Heading>
