@@ -12,6 +12,9 @@ import { ArrowRightIcon, CheckIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
 import { cn, formatPrice } from "@/lib/utils";
 import Phone from "./Phone";
+import LoginModal from "./LoginModal";
+import { createCheckoutSession } from "@/app/configure/preview/actions";
+import { useMutation } from "@tanstack/react-query";
 
 interface IProps {
   configuration: Configuration;
@@ -54,6 +57,51 @@ const DesignPreview: FC<IProps> = ({ configuration }) => {
     setShowConfetti(true);
   }, []);
   // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // Handle Checkout
+  const { mutate: createPaymentSession } = useMutation({
+    mutationKey: ["get-checkout-session"],
+    mutationFn: createCheckoutSession, // Server action to create order and stripe checkout session
+    onSuccess: ({ url, status }) => {
+      if (url) {
+        // Use navigation router to navigate to payment page (stripe)
+        router.push(url);
+      } else if (status === 403) {
+        toast({
+          title: "Forbidden",
+          description: "Stripe returned status code 403 (Forbidden).",
+          variant: "destructive",
+        });
+      }
+    },
+    onError: (error, { configId }, context) => {
+      toast({
+        title: "Something went wrong",
+        description: "There was an error on our end. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Handle checkout button click
+  const handleCheckout = () => {
+    if (user) {
+      // create payment session
+      createPaymentSession({ configId: id });
+    } else {
+      // need to log in
+      // Save current config in localStorage
+      // when user logs in, we redirect them to /auth-callback which checks localStorage and redirects to correct page if it exists
+      localStorage.setItem("configurationId", id);
+      // Open login modal
+      setIsLoginModalOpen(true);
+    }
+  };
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   return (
     <>
       {/* Confetti---------------------------------------------------------- */}
@@ -67,10 +115,12 @@ const DesignPreview: FC<IProps> = ({ configuration }) => {
         />
       </div>
       {/* Login Modal------------------------------------------------------- */}
+      <LoginModal isOpen={isLoginModalOpen} setIsOpen={setIsLoginModalOpen} />
       {/* Review Configuration---------------------------------------------- */}
       <div className="mt-20 flex flex-col items-center text-sm sm:grid-cols-12 sm:grid-rows-1 sm:gap-x-6 md:grid md:gap-x-8 lg:gap-x-12">
         <div className="md:col-span-4 md:row-span-2 md:row-end-2 lg:col-span-3">
           <Phone
+            containerProps={{ className: cn(`bg-${tw}`) }}
             imageProps={{
               src: configuration.croppedImageUrl!,
               // fill: true,
@@ -154,7 +204,7 @@ const DesignPreview: FC<IProps> = ({ configuration }) => {
             {/* Checkout Button--------------------------------------------- */}
             <div className="mt-8 flex justify-end pb-12">
               <Button
-                onClick={() => console.log("Checkout")}
+                onClick={() => handleCheckout()}
                 className="px-4 sm:px-6 lg:px-8"
               >
                 Check out <ArrowRightIcon className="ml-1.5 inline h-4 w-4" />

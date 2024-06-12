@@ -18,13 +18,16 @@ const Phone: FC<IProps> = ({ dark = false, containerProps, imageProps }) => {
     ...otherImageProps
   } = imageProps;
 
+  const { className: containerClassName, ...otherContainerProps } =
+    containerProps || {};
+
   return (
     <div
       className={cn(
-        "pointer-events-none relative z-50 overflow-hidden",
-        containerProps?.className,
+        "pointer-events-none relative z-50 w-fit overflow-hidden",
+        containerClassName,
       )}
-      {...containerProps}
+      {...otherContainerProps}
     >
       {/* Phone Template Image */}
       <Image
