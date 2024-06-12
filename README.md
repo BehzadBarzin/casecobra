@@ -21,3 +21,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 # Payment Flow
 
 ![image info](./imgs/payment-flow.png)
+
+# Upload Flow
+
+![image info](./imgs/upload-flow.png)
