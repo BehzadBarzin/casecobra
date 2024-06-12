@@ -5,6 +5,7 @@ import { getPaymentStatus } from "../app/thank-you/actions";
 import { useSearchParams } from "next/navigation";
 import { SymbolIcon } from "@radix-ui/react-icons";
 import { formatPrice } from "@/lib/utils";
+import PhonePreview from "./PhonePreview";
 
 const ThankYou = () => {
   // ---------------------------------------------------------------------------
@@ -90,10 +91,10 @@ const ThankYou = () => {
         {/* Phone Preview--------------------------------------------------- */}
         <div className="mt-4 flex space-x-6 overflow-hidden rounded-xl bg-gray-900/5 ring-1 ring-inset ring-gray-900/10 lg:rounded-2xl">
           {/* Phone Preview */}
-          {/* <PhonePreview
+          <PhonePreview
             croppedImageUrl={configuration.croppedImageUrl!}
             color={color!}
-          /> */}
+          />
         </div>
         {/* Address + etc.-------------------------------------------------- */}
         <div>
