@@ -1,3 +1,5 @@
+"use client";
+
 import { Configuration } from "@prisma/client";
 import React, { FC } from "react";
 

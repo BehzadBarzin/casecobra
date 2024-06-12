@@ -1,5 +1,3 @@
-"use client";
-
 import DesignPreview from "@/components/DesignPreview";
 import { db } from "@/db";
 import { notFound } from "next/navigation";
